@@ -12,3 +12,7 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+
+mybatis:
+  type-aliases-package: com.flabedu.peoplemeet.domain
+  mapper-locations: /mapper/**/*.xml
