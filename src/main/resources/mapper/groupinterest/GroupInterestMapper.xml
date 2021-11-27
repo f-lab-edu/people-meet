@@ -6,11 +6,11 @@
     <select id="findAllByGroupId" resultType="groupInterest">
         SELECT
            A.GROUP_INTEREST_ID AS ID,
-           A.PRIORITY
-           B.NAME AS NAME,
+           A.PRIORITY,
+           B.NAME AS NAME
         FROM
             GROUP_INTEREST A
             INNER JOIN GROUPS B
-                A.GROUP_ID = B.GROUP_ID
+                ON A.GROUP_ID = B.GROUP_ID
     </select>
 </mapper>
