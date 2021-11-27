@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface GroupInterestMapper {
 
-	List<GroupInterestVO> findAllByGroupId(String groupId);
+	List<GroupInterestVO> findAllByGroupId(Long groupId);
 }
