@@ -1,17 +1,16 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     generate-ddl: true
   datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:mariadb://people-meet.mariadb.database.azure.com:3306/people-meet?useSSL=true
+    username: peoplemeet
+    password: dpvmfoqakfldk1!
+    driver-class-name: org.mariadb.jdbc.Driver
 logging:
   level:
     org.hibernate.SQL: debug
-    org.hibernate.type: trace
 
 mybatis:
   type-aliases-package: com.flabedu.peoplemeet.domain
