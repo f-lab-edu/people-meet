@@ -8,10 +8,15 @@ spring:
     username: peoplemeet
     password: dpvmfoqakfldk1!
     driver-class-name: org.mariadb.jdbc.Driver
+    hikari:
+      maximum-pool-size: 5
 logging:
   level:
     org.hibernate.SQL: debug
+    com.flabedu.peoplemeet.domain.**.repository: TRACE
 
 mybatis:
   type-aliases-package: com.flabedu.peoplemeet.domain
   mapper-locations: /mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
