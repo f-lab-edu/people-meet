@@ -10,4 +10,6 @@ import com.flabedu.peoplemeet.domain.region.dto.RegionCacheDto;
 public interface RegionMapper {
 
 	List<RegionCacheDto> findAll();
+
+	RegionCacheDto findById(String regionId);
 }

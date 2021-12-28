@@ -27,7 +27,8 @@ public class CacheInitLoader {
 
 	private void regionCacheLoad() {
 		for (RegionCacheDto regionCacheDto : regionMapper.findAll()) {
-			Objects.requireNonNull(cacheManager.getCache("regions")).put(regionCacheDto.getRegionId(), regionCacheDto);
+			Objects.requireNonNull(cacheManager.getCache("regions"))
+						.put(regionCacheDto.getRegionId(), regionCacheDto);
 		}
 	}
 

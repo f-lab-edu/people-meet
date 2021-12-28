@@ -4,7 +4,7 @@
 
     <diskStore path="java.io.tmpdir" />
 
-    <cache name="region"
+    <cache name="regions"
            maxEntriesLocalHeap="1000"
            maxEntriesLocalDisk="1000"
            eternal="true"

@@ -12,4 +12,16 @@
         FROM
             REGION
     </select>
+
+    <select id="findById" resultType="regionCacheDto" parameterType="string">
+        SELECT
+            region_id,
+            level,
+            name,
+            parents_region_id
+        FROM
+            REGION
+        WHERE
+            region_id = #{regionId}
+    </select>
 </mapper>
