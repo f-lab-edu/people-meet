@@ -14,4 +14,15 @@
 
         <persistence strategy="localTempSwap" />
     </cache>
+
+    <cache name="interests"
+           maxEntriesLocalHeap="1000"
+           maxEntriesLocalDisk="1000"
+           eternal="true"
+           diskSpoolBufferSizeMB="20"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+
+        <persistence strategy="localTempSwap" />
+    </cache>
 </ehcache>
