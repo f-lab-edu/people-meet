@@ -1,11 +1,8 @@
 package com.flabedu.peoplemeet.config.auth;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.flabedu.peoplemeet.domain.user.User;
 import com.flabedu.peoplemeet.domain.user.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,36 +15,36 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 
+ * 인증, 인가 필터
+ * 
+ * OncePerRequestFilter
+ * 
+ */
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
-    private UserRepository userRepository;
+    @Value("${jwt.token-header-name}")
+    private String JWT_HEADER_NAME;
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
+    private final UserRepository userRepository;
+
+    private final JwtProvider jwtProvider;
+
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository, JwtProvider jwtProvider) {
         super(authenticationManager);
         this.userRepository = userRepository;
+        this.jwtProvider = jwtProvider;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String jwtToken = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
 
-        // header 가 있는지 확인
-        if ( ! jwtToken.isEmpty() && jwtToken.startsWith(JwtProperties.TOKEN_PREFIX)) {
+        if (request.getHeader(JWT_HEADER_NAME) != null) {
             // JWT 토큰을 검증해서 정상적인 사용자인지 확인
+            String email = jwtProvider.validateJwt(request);
 
-            DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(JwtProperties.SECRET_KEY)).build().verify(jwtToken);;
-            //String jwtToken = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
-
-            String userEmail = decodedJWT.getClaim("useremail").asString();
-
-            System.out.println(userEmail);
-
-            // 서명이 정상적으로 됨
-            if (userEmail.isEmpty()) { throw new RuntimeException();}
-
-            User userEntity = userRepository.findUserByEmail(userEmail).get();
-
-            System.out.println(userEntity);
+            User userEntity = userRepository.findUserByEmail(email).get();
 
             AuthDetails authDetails = new AuthDetails(userEntity);
 
@@ -56,7 +53,6 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                     new UsernamePasswordAuthenticationToken(authDetails, null, authDetails.getAuthorities());
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
-
         }
         chain.doFilter(request, response);
     }

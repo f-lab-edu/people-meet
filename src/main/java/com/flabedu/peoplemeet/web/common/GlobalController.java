@@ -1,5 +1,6 @@
 package com.flabedu.peoplemeet.web.common;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

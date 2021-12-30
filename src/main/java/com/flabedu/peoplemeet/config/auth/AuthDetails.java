@@ -10,7 +10,7 @@ import java.util.Collection;
 
 /**
  * UserDeatils
- * <p>
+ *
  * 스프링 시큐리티에서 사용자의 정보를 담는 인터페이스
  */
 @Data
@@ -31,13 +31,13 @@ public class AuthDetails implements UserDetails {
         return authorities;
     }
 
-    @Override
-    public String getUsername() {
-        return this.getUserEmail();
+    public String getEmail() {
+        return user.getEmail();
     }
 
-    public String getUserEmail() {
-        return user.getEmail();
+    @Override
+    public String getUsername() {
+        return this.getEmail(); //email을 User Id 로 사용
     }
 
     @Override

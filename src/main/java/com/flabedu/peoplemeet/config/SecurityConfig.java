@@ -1,11 +1,12 @@
 package com.flabedu.peoplemeet.config;
 
-import com.flabedu.peoplemeet.config.auth.JwtAuthenticationFilter;
 import com.flabedu.peoplemeet.config.auth.JwtAuthorizationFilter;
+import com.flabedu.peoplemeet.config.auth.JwtProvider;
 import com.flabedu.peoplemeet.domain.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -13,10 +14,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
- * Spring Securty의 인메모리 세션 저장소 - > SecurityContextHodler
+ * Spring Securty 설정 파일
  *
- * [ SecurityContextHodler [ Authentication객체 [ UserDetailService 객체 [ User 객체 ] ] ] ]
- *
+ * 참고 : SecurityContextHodler 스프링 시큐리티 인메모리 세션 저장소
+ * SecurityContextHodler <- Authentication객체 <- UserDetailService 객체 <- User 객체
  */
 @Configuration
 @EnableWebSecurity
@@ -26,8 +27,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     UserRepository userRepository;
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
+    public JwtProvider jwtProvider() {
+        return new JwtProvider();
+    }
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {return new BCryptPasswordEncoder();}
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public JwtAuthorizationFilter jwtAuthorizationFilter() throws Exception {
+        return new JwtAuthorizationFilter(authenticationManagerBean(), userRepository, jwtProvider());
     }
 
     /**
@@ -48,7 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+
+        http.csrf().disable(); // csrf 보안 disable
 
         http.formLogin().disable()
                 .httpBasic().disable();
@@ -56,14 +72,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilter(new JwtAuthenticationFilter(authenticationManager()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository));
+        http.addFilter(jwtAuthorizationFilter());
 
         http.authorizeRequests()
-                .antMatchers("/login", "/users/register")
+                .antMatchers("/signin", "/signup")
                 .permitAll()
+//                .antMatchers("/users/**")
+//                .access("hasRole('USER')")
                 .anyRequest()
-                .authenticated()
+/* 현재는 모든 요청 허용. */
+/*.authenticated()*/
+                .permitAll()
         ;
     }
 }
