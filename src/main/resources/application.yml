@@ -16,7 +16,7 @@ logging:
     com.flabedu.peoplemeet.domain.**.repository: TRACE
 
 mybatis:
-  type-aliases-package: com.flabedu.peoplemeet.domain
+  type-aliases-package: com.flabedu.peoplemeet.dto
   mapper-locations: /mapper/**/*.xml
   configuration:
     map-underscore-to-camel-case: true

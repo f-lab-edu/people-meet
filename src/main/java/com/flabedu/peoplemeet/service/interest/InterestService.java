@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.flabedu.peoplemeet.common.CacheService;
-import com.flabedu.peoplemeet.domain.interest.dto.InterestDto;
+import com.flabedu.peoplemeet.dto.interest.InterestDto;
 
 import lombok.RequiredArgsConstructor;
 

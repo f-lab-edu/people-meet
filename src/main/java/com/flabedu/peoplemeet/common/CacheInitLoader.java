@@ -7,9 +7,9 @@ import javax.annotation.PostConstruct;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
 
-import com.flabedu.peoplemeet.domain.interest.dto.InterestDto;
+import com.flabedu.peoplemeet.dto.interest.InterestDto;
 import com.flabedu.peoplemeet.domain.interest.repository.InterestMapper;
-import com.flabedu.peoplemeet.domain.region.dto.RegionCacheDto;
+import com.flabedu.peoplemeet.dto.region.RegionCacheDto;
 import com.flabedu.peoplemeet.domain.region.repository.RegionMapper;
 
 import lombok.RequiredArgsConstructor;

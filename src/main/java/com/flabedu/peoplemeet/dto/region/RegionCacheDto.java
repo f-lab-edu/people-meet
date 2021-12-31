@@ -1,4 +1,4 @@
-package com.flabedu.peoplemeet.domain.region.dto;
+package com.flabedu.peoplemeet.dto.region;
 
 import org.apache.ibatis.type.Alias;
 

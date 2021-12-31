@@ -1,4 +1,4 @@
-package com.flabedu.peoplemeet.domain.interest;
+package com.flabedu.peoplemeet.domain.group;
 
 import static javax.persistence.FetchType.*;
 
@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 
 import com.flabedu.peoplemeet.domain.BaseEntity;
 import com.flabedu.peoplemeet.domain.group.Group;
+import com.flabedu.peoplemeet.domain.interest.Interest;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

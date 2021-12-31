@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.flabedu.peoplemeet.domain.interest.repository.GroupInterestMapper">
+<mapper namespace="com.flabedu.peoplemeet.domain.group.mapper.GroupInterestMapper">
     <select id="findAllByGroupId" resultType="groupInterest">
         SELECT
            A.GROUP_INTEREST_ID AS ID,
