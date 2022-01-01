@@ -29,11 +29,15 @@ public class GroupService {
 
 	private final GroupRegionRepository groupRegionRepository;
 
-	public GroupDetailDTO getGroup(final Long groupId){
-		Group group = groupRepository.findById(groupId)
-			.orElseThrow(() -> new GroupNotFoundException(String.format("해당 그룹을 찾을 수 없습니다 [%d]", groupId)));
+	public GroupDetailDTO getGroupDetail(final Long groupId){
+		Group group = getGroup(groupId);
 
 		return new GroupDetailDTO(group.getName(), group.getDescription(), group.getTitleImageUrl());
+	}
+
+	private Group getGroup(Long groupId) {
+		return groupRepository.findById(groupId)
+			.orElseThrow(() -> new GroupNotFoundException(String.format("해당 그룹을 찾을 수 없습니다 [%d]", groupId)));
 	}
 
 	// TODO Interest, User 관계 연결 추가
@@ -61,6 +65,13 @@ public class GroupService {
 		}
 
 		groupRegionRepository.saveAll(groupRegions);
+	}
+
+	@Transactional
+	public void groupDisable(final Long groupId){
+		Group group = getGroup(groupId);
+
+		group.disable();
 	}
 
 }
