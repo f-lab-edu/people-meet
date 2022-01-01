@@ -50,4 +50,10 @@ public class Group extends BaseEntity {
 	public void disable() {
 		this.status = GroupStatus.DISABLE;
 	}
+
+	public void change(String title, Integer maxPeople, String titleImageUri) {
+		this.name = title;
+		this.maximumPeople = maxPeople;
+		this.titleImageUrl = titleImageUri;
+	}
 }

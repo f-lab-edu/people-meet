@@ -11,6 +11,7 @@ import com.flabedu.peoplemeet.domain.group.GroupRegion;
 import com.flabedu.peoplemeet.domain.group.repository.GroupRegionRepository;
 import com.flabedu.peoplemeet.domain.group.repository.GroupRepository;
 import com.flabedu.peoplemeet.domain.group.repository.GroupInterestRepository;
+import com.flabedu.peoplemeet.dto.group.GroupChangeDTO;
 import com.flabedu.peoplemeet.dto.group.GroupDetailDTO;
 import com.flabedu.peoplemeet.dto.group.GroupSaveDTO;
 import com.flabedu.peoplemeet.dto.region.RegionId;
@@ -67,11 +68,24 @@ public class GroupService {
 		groupRegionRepository.saveAll(groupRegions);
 	}
 
+	// TODO 권한 체크 추가
 	@Transactional
 	public void groupDisable(final Long groupId){
 		Group group = getGroup(groupId);
 
 		group.disable();
+	}
+
+	// TODO 권한 체크 추가, Region, Interest mapping 추가
+	@Transactional
+	public void changeGroup(final Long groupId, final GroupChangeDTO groupChangeDTO){
+		Group group = getGroup(groupId);
+
+		group.change(
+			groupChangeDTO.getTitle(),
+			groupChangeDTO.getMaxPeople(),
+			groupChangeDTO.getTitleImageUri()
+		);
 	}
 
 }
