@@ -1,4 +1,4 @@
-package com.flabedu.peoplemeet.domain.user.service;
+package com.flabedu.peoplemeet.service.user;
 
 import com.flabedu.peoplemeet.domain.user.User;
 
