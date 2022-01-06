@@ -1,0 +1,32 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    generate-ddl: true
+  datasource:
+    url: jdbc:log4jdbc:mariadb://people-meet.mariadb.database.azure.com:3306/people-meet?useSSL=true
+    username: peoplemeet
+    password: dpvmfoqakfldk1!
+#    driver-class-name: org.mariadb.jdbc.Driver
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    hikari:
+      maximum-pool-size: 5
+logging:
+  level:
+    org.hibernate.SQL: debug
+    jdbc.sqlonly: DEBUG
+    jdbc.sqltiming: INFO
+    jdbc.audit: WARN
+    jdbc.resultset: ERROR
+    jdbc.resultsettable: ERROR
+    jdbc.connection: INFO
+
+log4jdbc:
+  spylogdelegator:
+    name: net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator
+
+mybatis:
+  type-aliases-package: com.flabedu.peoplemeet.domain
+  mapper-locations: /mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true

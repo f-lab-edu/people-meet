@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flabedu.peoplemeet.domain.interest.repository.InterestMapper">
+    <select id="findAll" resultType="interestDto">
+        SELECT
+            A.interest_id,
+            A.name,
+            B.name AS category_name
+        FROM
+            interest A
+            INNER JOIN interest_category B
+                ON A.interest_category_id = B.interest_category_id
+    </select>
+
+</mapper>
