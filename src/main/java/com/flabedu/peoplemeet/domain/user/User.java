@@ -1,6 +1,10 @@
 package com.flabedu.peoplemeet.domain.user;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,17 +13,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.flabedu.peoplemeet.domain.BaseEntity;
-
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
-@Getter
+@Entity
+@Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
 public class User extends BaseEntity {
 
 	@Id
@@ -28,6 +29,10 @@ public class User extends BaseEntity {
 	private Long id;
 
 	private String email;
+
+	private String password;
+
+	private String roles;
 
 	private String name;
 
@@ -44,5 +49,13 @@ public class User extends BaseEntity {
 	private String emailToken;
 
 	private String profileImageUrl;
+
+	public List<String> getRoleList() {
+		if(this.roles.length() > 0) {
+			return Arrays.asList(this.roles.split(","));
+		}
+		return new ArrayList<>();
+	}
+
 
 }

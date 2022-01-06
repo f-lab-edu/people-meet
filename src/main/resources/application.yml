@@ -18,5 +18,12 @@ logging:
 mybatis:
   type-aliases-package: com.flabedu.peoplemeet.domain
   mapper-locations: /mapper/**/*.xml
+
   configuration:
     map-underscore-to-camel-case: true
+
+jwt:
+  token-header-name: Authorization
+  token-secret-key: peoplemeet
+  token-prefix: Bearer
+  token-expiration-time: 600000 # 60000 * 10
