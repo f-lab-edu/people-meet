@@ -45,6 +45,7 @@ public class Group extends BaseEntity {
 	private String titleImageUrl;
 
 	@Enumerated(EnumType.STRING)
+	@Builder.Default
 	private GroupStatus status = GroupStatus.ENABLE;
 
 	public void disable() {

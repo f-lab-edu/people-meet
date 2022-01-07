@@ -4,6 +4,7 @@ import static javax.persistence.FetchType.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -31,13 +32,9 @@ public class GroupInterest extends BaseEntity {
 	@Column(name = "group_interest_id")
 	private Long id;
 
-	@ManyToOne(fetch = LAZY, optional = false)
-	@JoinColumn(name = "interest_id")
-	private Interest interest;
+	private Long groupId;
 
-	@ManyToOne(fetch = LAZY, optional = false)
-	@JoinColumn(name = "group_id")
-	private Group group;
+	private Long interestId;
 
 	private Integer priority;
 }

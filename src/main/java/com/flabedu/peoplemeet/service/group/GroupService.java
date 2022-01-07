@@ -7,13 +7,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.flabedu.peoplemeet.domain.group.Group;
+import com.flabedu.peoplemeet.domain.group.GroupInterest;
 import com.flabedu.peoplemeet.domain.group.GroupRegion;
+import com.flabedu.peoplemeet.domain.group.repository.GroupInterestRepository;
 import com.flabedu.peoplemeet.domain.group.repository.GroupRegionRepository;
 import com.flabedu.peoplemeet.domain.group.repository.GroupRepository;
-import com.flabedu.peoplemeet.domain.group.repository.GroupInterestRepository;
 import com.flabedu.peoplemeet.dto.group.GroupChangeDTO;
 import com.flabedu.peoplemeet.dto.group.GroupDetailDTO;
 import com.flabedu.peoplemeet.dto.group.GroupSaveDTO;
+import com.flabedu.peoplemeet.dto.interest.InterestId;
 import com.flabedu.peoplemeet.dto.region.RegionId;
 import com.flabedu.peoplemeet.exception.GroupNotFoundException;
 
@@ -41,12 +43,13 @@ public class GroupService {
 			.orElseThrow(() -> new GroupNotFoundException(String.format("해당 그룹을 찾을 수 없습니다 [%d]", groupId)));
 	}
 
-	// TODO Interest, User 관계 연결 추가
+	// TODO User 관계 연결 추가, 로그인 사용자 가져오는 기능 필요
 	@Transactional
 	public Long register(final GroupSaveDTO groupSaveDTO){
 		Group savedGroup = groupRepository.save(groupSaveDTO.toGroup());
 
 		groupRegionMapping(savedGroup, groupSaveDTO.getRegions());
+		groupInterestMapping(savedGroup, groupSaveDTO.getInterests());
 
 		return savedGroup.getId();
 	}
@@ -66,6 +69,23 @@ public class GroupService {
 		}
 
 		groupRegionRepository.saveAll(groupRegions);
+	}
+
+	private void groupInterestMapping(final Group savedGroup, final List<InterestId> interestIds) {
+		final List<GroupInterest> groupInterests = new ArrayList<>();
+		final Long groupId = savedGroup.getId();
+
+		for (InterestId interestId : interestIds) {
+			groupInterests.add(
+				GroupInterest.builder()
+					.groupId(groupId)
+					.interestId(interestId.getId())
+					.priority(0)
+					.build()
+			);
+		}
+
+		groupInterestRepository.saveAll(groupInterests);
 	}
 
 	// TODO 권한 체크 추가
