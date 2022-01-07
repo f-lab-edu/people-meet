@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.flabedu.peoplemeet.domain.region.dto.RegionCacheDto;
+import com.flabedu.peoplemeet.dto.region.RegionCacheDto;
 
 @Mapper
 public interface RegionMapper {

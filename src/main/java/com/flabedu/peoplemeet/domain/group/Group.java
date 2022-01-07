@@ -2,12 +2,15 @@ package com.flabedu.peoplemeet.domain.group;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import com.flabedu.peoplemeet.domain.BaseEntity;
+import com.flabedu.peoplemeet.domain.group.type.GroupStatus;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -41,4 +44,17 @@ public class Group extends BaseEntity {
 
 	private String titleImageUrl;
 
+	@Enumerated(EnumType.STRING)
+	@Builder.Default
+	private GroupStatus status = GroupStatus.ENABLE;
+
+	public void disable() {
+		this.status = GroupStatus.DISABLE;
+	}
+
+	public void change(String title, Integer maxPeople, String titleImageUri) {
+		this.name = title;
+		this.maximumPeople = maxPeople;
+		this.titleImageUrl = titleImageUri;
+	}
 }

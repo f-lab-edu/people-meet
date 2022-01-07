@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.flabedu.peoplemeet.domain.interest.dto.InterestDto;
+import com.flabedu.peoplemeet.dto.interest.InterestDto;
 
 @Mapper
 public interface InterestMapper {

@@ -1,4 +1,4 @@
-package com.flabedu.peoplemeet.domain.interest.dto;
+package com.flabedu.peoplemeet.dto.interest;
 
 import org.apache.ibatis.type.Alias;
 
