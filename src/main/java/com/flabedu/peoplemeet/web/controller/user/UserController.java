@@ -1,4 +1,4 @@
-package com.flabedu.peoplemeet.web.user.controller;
+package com.flabedu.peoplemeet.web.controller.user;
 
 import org.springframework.stereotype.Controller;
 

@@ -1,4 +1,4 @@
-package com.flabedu.peoplemeet.domain.user.mapper;
+package com.flabedu.peoplemeet.domain.user.repository;
 
 import com.flabedu.peoplemeet.domain.user.User;
 import org.apache.ibatis.annotations.Mapper;

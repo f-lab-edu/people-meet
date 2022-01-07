@@ -1,7 +1,7 @@
 package com.flabedu.peoplemeet.service.user;
 
 import com.flabedu.peoplemeet.domain.user.User;
-import com.flabedu.peoplemeet.domain.user.mapper.UserMapper;
+import com.flabedu.peoplemeet.domain.user.repository.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

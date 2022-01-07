@@ -7,7 +7,7 @@ import java.util.Optional;
 
 /**
  * JpaRepository 상속하면 자동 컴포넌트 스캔
- *
+ * <p>
  * Jpa Query methods
  */
 public interface UserRepository extends JpaRepository<User, Long> {

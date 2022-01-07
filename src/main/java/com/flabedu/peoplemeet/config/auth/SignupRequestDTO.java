@@ -3,11 +3,9 @@ package com.flabedu.peoplemeet.config.auth;
 import com.flabedu.peoplemeet.domain.user.User;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter

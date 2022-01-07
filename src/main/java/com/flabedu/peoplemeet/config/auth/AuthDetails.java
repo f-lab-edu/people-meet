@@ -10,7 +10,7 @@ import java.util.Collection;
 
 /**
  * UserDeatils
- *
+ * <p>
  * 스프링 시큐리티에서 사용자의 정보를 담는 인터페이스
  */
 @Data

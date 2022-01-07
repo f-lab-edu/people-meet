@@ -1,7 +1,7 @@
 package com.flabedu.peoplemeet.config.auth;
 
 import com.flabedu.peoplemeet.domain.user.User;
-import com.flabedu.peoplemeet.domain.user.mapper.UserMapper;
+import com.flabedu.peoplemeet.domain.user.repository.UserMapper;
 import com.flabedu.peoplemeet.exception.EmailDuplicatedException;
 import com.flabedu.peoplemeet.exception.message.UserErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * 인증 컨트롤러
@@ -59,7 +57,7 @@ public class AuthController {
 
         String email = request.getEmail();
 
-        if(userMapper.isExistEmail(email)) {
+        if (userMapper.isExistEmail(email)) {
             throw new EmailDuplicatedException(UserErrorMessage.EMAIL_DUPLICATION.getMessage());
         }
 
