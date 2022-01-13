@@ -6,9 +6,12 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.flabedu.peoplemeet.exception.JWTValidateException;
 import org.springframework.beans.factory.annotation.Value;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
+/**
+ * JWTProvider
+ * 
+ */
 public class JwtProvider {
 
     @Value("${jwt.token-header-name}")
@@ -40,13 +43,11 @@ public class JwtProvider {
     /**
      * JWT Token 검증
      */
-    public String validateJwt(HttpServletRequest request) {
+    public String validateJwt(String jwtHeaderValue) {
 
-        String jwtHeader = request.getHeader(JWT_HEADER_NAME);
+        if (!jwtHeaderValue.startsWith(JWT_PREFIX)) throw new JWTValidateException();
 
-        if (!jwtHeader.startsWith(JWT_PREFIX)) throw new JWTValidateException();
-
-        String jwtToken = jwtHeader.replace(JWT_PREFIX + " ", "");
+        String jwtToken = jwtHeaderValue.replace(JWT_PREFIX + " ", "");
 
         DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC256(JWT_SECRET_KEY)).build().verify(jwtToken);
 

@@ -16,11 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 
  * 인증, 인가 필터
- * 
+ *
  * OncePerRequestFilter
- * 
  */
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
@@ -39,10 +37,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        String jwtHeaderValue = request.getHeader(JWT_HEADER_NAME);
 
-        if (request.getHeader(JWT_HEADER_NAME) != null) {
+        if (jwtHeaderValue != null) {
+
             // JWT 토큰을 검증해서 정상적인 사용자인지 확인
-            String email = jwtProvider.validateJwt(request);
+            String email = jwtProvider.validateJwt(jwtHeaderValue);
 
             User userEntity = userRepository.findUserByEmail(email).get();
 

@@ -1,7 +1,9 @@
 package com.flabedu.peoplemeet.domain.user;
 
 import com.flabedu.peoplemeet.domain.BaseEntity;
+import com.flabedu.peoplemeet.web.controller.user.dto.UserInfoDto;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -37,7 +39,10 @@ public class User extends BaseEntity {
 
     private String birthDay;
 
-    private LocalDateTime dateEmailChecked;
+    @Enumerated(EnumType.STRING)
+    private UserStatus userStatus;
+
+    private LocalDateTime emailTokenCreateTime;
 
     private String emailToken;
 
@@ -48,5 +53,22 @@ public class User extends BaseEntity {
             return Arrays.asList(this.roles.split(","));
         }
         return new ArrayList<>();
+    }
+
+    public UserInfoDto toUserInfoResponseDto() {
+        return UserInfoDto.builder()
+                .email(this.email)
+                .name(this.name)
+                .nickName(this.nickName)
+                .address(this.address)
+                .phoneNumber(this.phoneNumber)
+                .birthDay(this.birthDay)
+                .profileImageUrl(this.profileImageUrl)
+                .build()
+                ;
+    }
+
+    public void encode(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
     }
 }

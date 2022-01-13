@@ -1,23 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-
-
 <mapper namespace="com.flabedu.peoplemeet.domain.user.repository.UserMapper">
     <select id="selectUserByEmail" parameterType="String" resultType="com.flabedu.peoplemeet.domain.user.User">
-        SELECT user_id, email, password, roles, name, nick_name, address, phone_number, birth_day, date_email_checked, email_token, profile_image_url, create_time, update_time
+        SELECT user_id, email, password, roles, name, nick_name, address, phone_number, birth_day, user_status, email_token_create_time, email_token, profile_image_url, create_time, update_time
           FROM user
-         WHERE email = #{id}
+         WHERE email = #{email}
     </select>
 
     <insert id="insertUser" parameterType="com.flabedu.peoplemeet.domain.user.User" >
-        INSERT INTO user (user_id, email, password, roles, name, nick_name, address, phone_number, birth_day, date_email_checked, email_token, profile_image_url)
-         VALUES (#{id}, #{email}, #{password}, #{roles}, #{name}, #{nickName}, #{address}, #{phoneNumber}, #{birthDay}, #{dateEmailChecked}, #{emailToken}, #{profileImageUrl})
+        INSERT INTO user (user_id, email, password, roles, name, nick_name, address, phone_number, birth_day, user_status, email_token_create_time, email_token, profile_image_url)
+         VALUES (#{id}, #{email}, #{password}, #{roles}, #{name}, #{nickName}, #{address}, #{phoneNumber}, #{birthDay}, #{userStatus}, #{emailTokenCreateTime}, #{emailToken}, #{profileImageUrl})
     </insert>
 
     <select id="isExistEmail" parameterType="String" resultType="boolean">
         SELECT EXISTS ( SELECT email FROM user WHERE email = #{email} )
     </select>
+
+    <update id="updateUser" parameterType="com.flabedu.peoplemeet.domain.user.User">
+        UPDATE user
+           SET name = #{name}
+             , nick_name = #{nickName}
+             , address = #{address}
+             , phone_number = #{phoneNumber}
+             , birth_day = #{birthDay}
+             , profile_image_url = #{profileImageUrl}
+    </update>
+
+    <update id="updateEmailToken" parameterType="Map">
+        UPDATE user
+           SET email_token = #{emailToken}
+             , email_token_create_time = #{emailTokenCreateTime}
+         WHERE email = #{email}
+    </update>
+
+    <update id="updateUserStatus" parameterType="Map">
+        UPDATE user
+        SET user_status = #{userStatus}
+        WHERE email = #{email}
+    </update>
+
+
+
+    <delete id="deleteUser" parameterType="String">
+        DELETE FROM user
+         WHERE email = #{email}
+    </delete>
 
 </mapper>
 

@@ -1,6 +1,7 @@
 package com.flabedu.peoplemeet.config.auth;
 
 import com.flabedu.peoplemeet.domain.user.User;
+import com.flabedu.peoplemeet.domain.user.UserStatus;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +11,7 @@ import java.util.Collection;
 
 /**
  * UserDeatils
- * <p>
+ *
  * 스프링 시큐리티에서 사용자의 정보를 담는 인터페이스
  */
 @Data
@@ -33,6 +34,10 @@ public class AuthDetails implements UserDetails {
 
     public String getEmail() {
         return user.getEmail();
+    }
+
+    public UserStatus getUserStatus() {
+        return user.getUserStatus();
     }
 
     @Override
