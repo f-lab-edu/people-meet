@@ -51,6 +51,12 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
 
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail'
+
+    // https://mvnrepository.com/artifact/org.mybatis/mybatis-typehandlers-jsr310
+    implementation group: 'org.mybatis', name: 'mybatis-typehandlers-jsr310', version: '1.0.2'
+
 }
 
 test {

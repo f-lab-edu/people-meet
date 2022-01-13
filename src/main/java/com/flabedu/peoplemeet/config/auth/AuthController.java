@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 /**
+ * AuthController
+ *
  * 인증 컨트롤러
  */
 @RestController
@@ -37,7 +41,7 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @PostMapping("/signin")
-    public ResponseEntity signin(@RequestBody final SigninRequestDTO request) {
+    public ResponseEntity signin(@RequestBody @Valid final SigninRequestDTO request) {
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                 = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
@@ -53,16 +57,15 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity join(@RequestBody final SignupRequestDTO request) {
+    public ResponseEntity signup(@RequestBody @Valid final SignupRequestDTO request) {
 
         String email = request.getEmail();
 
-        if (userMapper.isExistEmail(email)) {
-            throw new EmailDuplicatedException(UserErrorMessage.EMAIL_DUPLICATION.getMessage());
-        }
+        if (userMapper.isExistEmail(email))
+            throw new EmailDuplicatedException();
 
         User user = request.toEntity();
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.encode(bCryptPasswordEncoder);
 
         userMapper.insertUser(user);
 
